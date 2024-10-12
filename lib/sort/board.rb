@@ -1,5 +1,5 @@
 class Board
-  attr_accessor
+  attr_accessor :secret_word
 
   def initialize
     @secret_word = Array.new
@@ -17,4 +17,8 @@ class Board
     hidden_word(selected_word)
   end
 
+
+  ### add lives counter before I make move with implementation 
+  # of loop checking the lives and letters which will be probably
+  # in display method.
 end

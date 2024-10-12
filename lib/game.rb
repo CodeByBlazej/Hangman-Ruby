@@ -9,7 +9,7 @@ class Game
     @player = create_player
 
     @words = []
-    @selected_word
+    @selected_word = nil
   end
 
   def select_word
@@ -28,12 +28,26 @@ class Game
     Player.new(player_name)
   end
 
+  def check_letter(letter, secret_word)
+    selected_word_copy = @selected_word.clone.split('')
+  
+    selected_word_copy.each_with_index do |el, index|
+      next unless el == letter[index]
+
+      secret_word[index] = el
+      
+    end
+    puts letter
+    # @board.display(@selected_word)
+    p @board.secret_word
+  end
+
   def play_round
     puts @selected_word
     p @words.size
     @board.display(@selected_word)
     @player.make_guess
-    puts @player.name
+    check_letter(@player.letter, @board.secret_word)
   end
 
   def start
