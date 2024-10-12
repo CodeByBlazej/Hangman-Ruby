@@ -1,10 +1,12 @@
 require_relative 'sort/board'
+require_relative 'sort/player'
 
 class Game
-  
+  attr_accessor
+
   def initialize
     @board = Board.new
-
+    @player = create_player
 
     @words = []
     @selected_word
@@ -20,12 +22,25 @@ class Game
     @selected_word = @words.sample
   end
 
-  def start
-    puts "game starts"
-    select_word
+  def create_player
+    puts "Welcome to Hangman! What is your name?"
+    player_name = gets.chomp
+    Player.new(player_name)
+  end
+
+  def play_round
     puts @selected_word
     p @words.size
     @board.display(@selected_word)
+    @player.make_guess
+    puts @player.name
+  end
+
+  def start
+    puts "game starts"
+    select_word
+    play_round
+    
   end
 
 end
