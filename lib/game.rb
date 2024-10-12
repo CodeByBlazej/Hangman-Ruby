@@ -1,7 +1,11 @@
+require_relative 'sort/board'
+
 class Game
   
   def initialize
-    
+    @board = Board.new
+
+
     @words = []
     @selected_word
   end
@@ -10,7 +14,7 @@ class Game
     fname = 'google-10000-english.txt'
 
     File.readlines(fname).each do |line|
-      @words << line.chomp if line.size > 5 && line.size <= 12
+      @words << line.chomp if line.size >= 5 && line.size <= 12
     end
 
     @selected_word = @words.sample
@@ -19,7 +23,9 @@ class Game
   def start
     puts "game starts"
     select_word
-    p @selected_word
+    puts @selected_word
+    p @words.size
+    @board.display(@selected_word)
   end
 
 end
