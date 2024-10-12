@@ -1,14 +1,28 @@
-puts "Game started!"
+class Game
+  
+  def initialize
+    
+    @words = []
+    @selected_word
+  end
 
+  def select_word
+    fname = 'google-10000-english.txt'
 
-fname = 'google-10000-english.txt'
-words = []
+    File.readlines(fname).each do |line|
+      @words << line.chomp if line.size > 5 && line.size <= 12
+    end
 
-File.readlines(fname).each do |line|
-  words << line.chomp if line.size > 5 && line.size <= 12
+    @selected_word = @words.sample
+  end
+
+  def start
+    puts "game starts"
+    select_word
+    p @selected_word
+  end
+
 end
 
-selected_word = words.sample
-p words
-p words.size
-p selected_word
+game = Game.new
+game.start
