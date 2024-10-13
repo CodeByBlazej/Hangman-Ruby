@@ -37,12 +37,11 @@ class Game
 
         secret_word[index] = el
     end
-    # binding.pry
+
     if selected_word_copy.none?(letter)
       @board.remove_live
     end
-    # puts 
-    # puts @board.secret_word.join(' ')
+    
     @board.display(@selected_word)
   end
 
