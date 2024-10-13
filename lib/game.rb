@@ -41,7 +41,7 @@ class Game
     if selected_word_copy.none?(letter)
       @board.remove_live
     end
-    
+
     @board.display(@selected_word)
   end
 
