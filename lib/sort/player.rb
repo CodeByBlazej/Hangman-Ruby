@@ -9,6 +9,5 @@ class Player
   def make_guess
     puts "\nWhat's the letter of your choice?"
     @letter = gets.chomp.downcase
-    puts @letter
   end
 end

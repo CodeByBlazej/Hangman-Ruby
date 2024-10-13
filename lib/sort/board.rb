@@ -14,7 +14,6 @@ class Board
     else
       puts @secret_word.join(' ')
     end
-
   end
 
   def show_lives
@@ -23,18 +22,12 @@ class Board
 
   def remove_live
     @lives.pop
-    show_lives
   end
 
   def display(selected_word)
-    puts "WORD\n"
+    puts "\nWORD:"
     hidden_word(selected_word)
-    puts "YOUR LIVES"
+    puts "\nYOUR LIFE-POINTS:"
     show_lives
   end
-
-
-  ### add lives counter before I make move with implementation 
-  # of loop checking the lives and letters which will be probably
-  # in display method.
 end
