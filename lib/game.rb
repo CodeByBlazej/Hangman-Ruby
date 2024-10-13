@@ -1,8 +1,9 @@
 require_relative 'sort/board'
 require_relative 'sort/player'
+require 'pry-byebug'
 
 class Game
-  attr_accessor
+  attr_accessor :selected_word
 
   def initialize
     @board = Board.new
@@ -36,15 +37,19 @@ class Game
 
         secret_word[index] = el
     end
-    puts @board.secret_word.join(' ')
+    # puts @board.secret_word.join(' ')
+    @board.display(@selected_word)
   end
 
   def play_round
     puts @selected_word
-    p @words.size
+    # binding.pry
     @board.display(@selected_word)
-    @player.make_guess
-    check_letter(@player.letter, @board.secret_word)
+
+    until @board.lives.empty? do
+      @player.make_guess
+      check_letter(@player.letter, @board.secret_word)
+    end
   end
 
   def start
