@@ -32,14 +32,11 @@ class Game
     selected_word_copy = @selected_word.clone.split('')
   
     selected_word_copy.each_with_index do |el, index|
-      next unless el == letter[index]
+      next unless el == letter
 
-      secret_word[index] = el
-      
+        secret_word[index] = el
     end
-    puts letter
-    # @board.display(@selected_word)
-    p @board.secret_word
+    puts @board.secret_word.join(' ')
   end
 
   def play_round
