@@ -11,7 +11,14 @@ class Game
 
     @words = []
     @selected_word = nil
-    @board_hash = @board.to_h { |item| [item, item] } 
+  end
+
+  def to_h
+    {
+      player: @player.to_h,
+      board: @board.to_h,
+      selected_word: @selected_word
+    }
   end
 
   def select_word
@@ -64,7 +71,6 @@ class Game
 
   def start
     puts "\nLook at the row of letters below and try to guess the word!\nEvery time you guess wrong, you lose 1 life-point"
-    puts @board_hash
     select_word
     play_round
   end
