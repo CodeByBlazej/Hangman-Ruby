@@ -7,6 +7,10 @@ class Board
     @lives = Array.new(8, 'O')
   end
 
+  def to_h
+    { secret_word: @secret_word, lives: @lives }
+  end
+
   def hidden_word(selected_word)
     if @secret_word.empty?
       selected_word.split('').each { |letter| @secret_word.push('_') }
