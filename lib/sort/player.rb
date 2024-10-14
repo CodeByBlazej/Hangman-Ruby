@@ -6,6 +6,10 @@ class Player
     @letter
   end
 
+  def to_h
+    { name: @name }
+  end
+
   def make_guess
     puts "\nWhat's the letter of your choice?"
     @letter = gets.chomp.downcase
