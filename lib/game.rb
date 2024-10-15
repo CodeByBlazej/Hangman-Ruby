@@ -1,6 +1,7 @@
 require_relative 'sort/board'
 require_relative 'sort/player'
 require 'pry-byebug'
+require 'json'
 
 class Game
   attr_accessor :selected_word
@@ -19,6 +20,14 @@ class Game
       board: @board.to_h,
       selected_word: @selected_word
     }
+  end
+
+  def self.from_h(hash)
+    game = Game.new
+    game.instance_variable_set(:@player, Player.from_h(hash[:player]))
+    game.instance_variable_set(:@board, Board.from_h(hash[:board]))
+    game.instance_variable_set(:@selected_word, hash[:selected_word])
+    game
   end
 
   def select_word
@@ -53,12 +62,32 @@ class Game
     @board.display(@selected_word)
   end
 
+  def save_game
+    File.write("savefile.json", JSON.dump(self.to_h))
+  end
+
+  def load_game
+    puts "Do you want to load saved game? Type YES or NO..."
+    answer = gets.chomp.downcase
+    if answer == 'yes'
+      save_data = JSON.load(File.read("savefile.json"))
+      game = Game.from_h(save_data)
+      game.start
+    end
+  end
+
   def play_round
     # puts @selected_word
+    puts "\nIf you want to SAVE the game instead of guess letter type SAVE.\n\n"
     @board.display(@selected_word)
 
     until @board.lives.empty? || @selected_word == @board.secret_word.join('') do
       @player.make_guess
+
+      if @player.letter == 'save'
+        save_game
+      end
+
       check_letter(@player.letter, @board.secret_word)
     end
 
@@ -70,6 +99,7 @@ class Game
   end
 
   def start
+    load_game
     puts "\nLook at the row of letters below and try to guess the word!\nEvery time you guess wrong, you lose 1 life-point"
     select_word
     play_round
