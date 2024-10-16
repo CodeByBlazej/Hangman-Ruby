@@ -10,8 +10,8 @@ class Player
     { name: @name }
   end
 
-  def from_h(hash)
-    Player.new(hash[:name])
+  def self.from_h(hash)
+    Player.new(hash['name'])
   end
 
   def make_guess
