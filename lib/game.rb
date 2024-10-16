@@ -7,7 +7,7 @@ class Game
   attr_accessor :selected_word
 
   def initialize
-    @board = Board.new
+    @board = Board.new(Array.new, Array.new(8, 'O'))
     @player = create_player
 
     @words = []
@@ -24,9 +24,9 @@ class Game
 
   def self.from_h(hash)
     game = Game.new
-    game.instance_variable_set(:@player, Player.from_h(hash[:player]))
-    game.instance_variable_set(:@board, Board.from_h(hash[:board]))
-    game.instance_variable_set(:@selected_word, hash[:selected_word])
+    game.instance_variable_set(:@player, Player.from_h(hash['player']))
+    game.instance_variable_set(:@board, Board.from_h(hash['board']))
+    game.instance_variable_set(:@selected_word, hash['selected_word'])
     game
   end
 
@@ -106,5 +106,3 @@ class Game
   end
 end
 
-game = Game.new
-game.start
