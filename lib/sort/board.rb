@@ -2,17 +2,17 @@
 class Board
   attr_accessor :secret_word, :lives
 
-  def initialize
-    @secret_word = Array.new
-    @lives = Array.new(8, 'O')
+  def initialize(secret_word, lives)
+    @secret_word = secret_word
+    @lives = lives
   end
 
   def to_h
     { secret_word: @secret_word, lives: @lives }
   end
 
-  def from_h(hash)
-    Board.new(hash[:secret_word], hash[:lives])
+  def self.from_h(hash)
+    Board.new(hash['secret_word'], hash['lives'])
   end
 
   def hidden_word(selected_word)
