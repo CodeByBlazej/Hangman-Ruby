@@ -11,6 +11,10 @@ class Board
     { secret_word: @secret_word, lives: @lives }
   end
 
+  def from_h(hash)
+    Board.new(hash[:secret_word], hash[:lives])
+  end
+
   def hidden_word(selected_word)
     if @secret_word.empty?
       selected_word.split('').each { |letter| @secret_word.push('_') }
