@@ -10,6 +10,10 @@ class Player
     { name: @name }
   end
 
+  def from_h(hash)
+    Player.new(hash[:name])
+  end
+
   def make_guess
     puts "\nWhat's the letter of your choice?"
     @letter = gets.chomp.downcase
