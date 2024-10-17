@@ -8,7 +8,7 @@ class Game
 
   def initialize
     @board = Board.new(Array.new, Array.new(8, 'O'))
-    @player = create_player
+    @player = nil
 
     @words = []
     @selected_word = nil
@@ -41,6 +41,8 @@ class Game
   end
 
   def create_player
+    return @player if @player
+
     puts "\nWelcome to the Hangman Game! What is your name?"
     player_name = gets.chomp
     Player.new(player_name)
@@ -66,13 +68,11 @@ class Game
     File.write("savefile.json", JSON.dump(self.to_h))
   end
 
-  def load_game
-    puts "Do you want to load saved game? Type YES or NO..."
-    answer = gets.chomp.downcase
+  def load_game(answer)
     if answer == 'yes'
       save_data = JSON.load(File.read("savefile.json"))
       game = Game.from_h(save_data)
-      game.start
+      game.play_round
     end
   end
 
@@ -99,10 +99,16 @@ class Game
   end
 
   def start
-    load_game
-    puts "\nLook at the row of letters below and try to guess the word!\nEvery time you guess wrong, you lose 1 life-point"
-    select_word
-    play_round
+    puts "Do you want to load saved game? Type YES or NO..."
+    answer = gets.chomp.downcase
+    load_game(answer)
+
+    if answer != 'yes'
+      @player = create_player
+      puts "\nLook at the row of letters below and try to guess the word!\nEvery time you guess wrong, you lose 1 life-point"
+      select_word
+      play_round
+    end
   end
 end
 
