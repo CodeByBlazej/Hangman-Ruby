@@ -43,7 +43,7 @@ class Game
   def create_player
     return @player if @player
 
-    puts "\nWelcome to the Hangman Game! What is your name?"
+    puts "\nWhat is your name?"
     player_name = gets.chomp
     Player.new(player_name)
   end
@@ -98,12 +98,25 @@ class Game
     end
   end
 
-  def start
-    puts "Do you want to load saved game? Type YES or NO..."
-    answer = gets.chomp.downcase
-    load_game(answer)
+  def welcome_message
+    puts "Welcome to the Hangman!"
+  end
 
-    if answer != 'yes'
+  def start
+    welcome_message
+    if File.exist?("savefile.json")
+      puts "Do you want to load saved game? Type YES or NO..." 
+      answer = gets.chomp.downcase
+      load_game(answer)
+
+      if answer != 'yes'
+        welcome_message if @player
+        @player = create_player
+        puts "\nLook at the row of letters below and try to guess the word!\nEvery time you guess wrong, you lose 1 life-point"
+        select_word
+        play_round
+      end
+    else
       @player = create_player
       puts "\nLook at the row of letters below and try to guess the word!\nEvery time you guess wrong, you lose 1 life-point"
       select_word
