@@ -68,12 +68,10 @@ class Game
     File.write("savefile.json", JSON.dump(self.to_h))
   end
 
-  def load_game(answer)
-    if answer == 'yes'
-      save_data = JSON.load(File.read("savefile.json"))
-      game = Game.from_h(save_data)
-      game.play_round
-    end
+  def load_game
+    save_data = JSON.load(File.read("savefile.json"))
+    game = Game.from_h(save_data)
+    game.play_round
   end
 
   def play_round
@@ -99,29 +97,22 @@ class Game
   end
 
   def welcome_message
-    puts "Welcome to the Hangman!"
+    puts "\nWelcome to the Hangman!"
   end
 
   def start
     welcome_message
-    if File.exist?("savefile.json")
-      puts "Do you want to load saved game? Type YES or NO..." 
-      answer = gets.chomp.downcase
-      load_game(answer)
 
-      if answer != 'yes'
-        welcome_message if @player
-        @player = create_player
-        puts "\nLook at the row of letters below and try to guess the word!\nEvery time you guess wrong, you lose 1 life-point"
-        select_word
-        play_round
-      end
-    else
-      @player = create_player
-      puts "\nLook at the row of letters below and try to guess the word!\nEvery time you guess wrong, you lose 1 life-point"
-      select_word
-      play_round
+    if File.exist?("savefile.json")
+      puts "\nDo you want to load saved game? Type YES or NO..." 
+      answer = gets.chomp.downcase
+      return load_game if answer == "yes"
     end
+
+    # welcome_message if @player
+    @player = create_player
+    puts "\nLook at the row of letters below and try to guess the word!\nEvery time you guess wrong, you lose 1 life-point"
+    select_word
+    play_round
   end
 end
-
