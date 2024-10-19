@@ -33,9 +33,9 @@ class Board
   end
 
   def display(selected_word)
-    puts "\nWORD:"
+    puts "\nWORD:".colorize(:red)
     hidden_word(selected_word)
-    puts "\nYOUR LIFE-POINTS:"
+    puts "\nYOUR LIFE-POINTS:".colorize(:red)
     show_lives
   end
 end
