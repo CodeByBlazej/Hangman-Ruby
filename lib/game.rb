@@ -1,7 +1,7 @@
 require_relative 'sort/board'
 require_relative 'sort/player'
-require 'pry-byebug'
 require 'json'
+require 'colorize'
 
 class Game
   attr_accessor :selected_word
@@ -30,6 +30,16 @@ class Game
     game
   end
 
+  def save_game
+    File.write("savefile.json", JSON.dump(self.to_h))
+  end
+
+  def load_game
+    save_data = JSON.load(File.read("savefile.json"))
+    game = Game.from_h(save_data)
+    game.play_round
+  end
+
   def select_word
     fname = 'google-10000-english.txt'
 
@@ -43,7 +53,7 @@ class Game
   def create_player
     return @player if @player
 
-    puts "\nWhat is your name?"
+    puts "\nWhat is your name?".colorize(:color => :black, :background => :light_green)
     player_name = gets.chomp
     Player.new(player_name)
   end
@@ -64,19 +74,8 @@ class Game
     @board.display(@selected_word)
   end
 
-  def save_game
-    File.write("savefile.json", JSON.dump(self.to_h))
-  end
-
-  def load_game
-    save_data = JSON.load(File.read("savefile.json"))
-    game = Game.from_h(save_data)
-    game.play_round
-  end
-
   def play_round
-    # puts @selected_word
-    puts "\nIf you want to SAVE the game instead of guess letter type SAVE.\n\n"
+    puts "\nIf you want to SAVE the game instead of guess letter type SAVE.\n\n".colorize(:color => :black, :background => :light_green)
     @board.display(@selected_word)
 
     until @board.lives.empty? || @selected_word == @board.secret_word.join('') do
@@ -90,28 +89,27 @@ class Game
     end
 
     if @board.lives.empty?
-      puts "\nGAME OVER! You run out of lives! Secret word was: #{selected_word}"
+      puts "\nGAME OVER! You run out of lives! Secret word was: #{selected_word}".colorize(:color => :black, :background => :light_green)
     elsif @selected_word == @board.secret_word.join('')
-      puts "\n#{@player.name} guessed the word and WINS!"
+      puts "\n#{@player.name} guessed the word and WINS!".colorize(:color => :black, :background => :light_green)
     end
   end
 
   def welcome_message
-    puts "\nWelcome to the Hangman!"
+    puts "\nWelcome to the Hangman!".colorize(:color => :black, :background => :light_green)
   end
 
   def start
     welcome_message
 
     if File.exist?("savefile.json")
-      puts "\nDo you want to load saved game? Type YES or NO..." 
+      puts "\nDo you want to load saved game? Type YES or NO...".colorize(:color => :black, :background => :light_green)
       answer = gets.chomp.downcase
       return load_game if answer == "yes"
     end
 
-    # welcome_message if @player
     @player = create_player
-    puts "\nLook at the row of letters below and try to guess the word!\nEvery time you guess wrong, you lose 1 life-point"
+    puts "\nLook at the row of letters below and try to guess the word!\nEvery time you guess wrong, you lose 1 life-point".colorize(:color => :black, :background => :light_green)
     select_word
     play_round
   end
