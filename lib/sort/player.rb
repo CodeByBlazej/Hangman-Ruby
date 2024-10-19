@@ -1,3 +1,4 @@
+# Player class is responsible for player object and it's methods
 class Player
   attr_accessor :name, :letter
 

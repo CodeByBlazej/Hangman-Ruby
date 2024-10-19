@@ -1,4 +1,4 @@
-
+# Board class is responsible for board object and it's methods
 class Board
   attr_accessor :secret_word, :lives
 
