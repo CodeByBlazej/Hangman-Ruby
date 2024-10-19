@@ -90,7 +90,7 @@ class Game
     end
 
     if @board.lives.empty?
-      puts "\nGAME OVER! You run out of lives!"
+      puts "\nGAME OVER! You run out of lives! Secret word was: #{selected_word}"
     elsif @selected_word == @board.secret_word.join('')
       puts "\n#{@player.name} guessed the word and WINS!"
     end
