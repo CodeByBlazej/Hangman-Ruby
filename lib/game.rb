@@ -3,6 +3,7 @@ require_relative 'sort/player'
 require 'json'
 require 'colorize'
 
+# Game class is responsible for all main game mechanics and creating player and board objects.
 class Game
   attr_accessor :selected_word
 
