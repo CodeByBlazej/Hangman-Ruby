@@ -58,7 +58,7 @@ class Game
     end
 
     if selected_word_copy.none?(letter)
-      @board.remove_live
+      @board.remove_live unless letter == 'save'
     end
 
     @board.display(@selected_word)
